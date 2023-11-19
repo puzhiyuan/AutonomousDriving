@@ -2,7 +2,7 @@
 Author: ‘puzhiyuan’ ‘puzhiyuan185489643@gmail.com’
 Date: 2023-11-15 09:45:20
 LastEditors: ‘puzhiyuan’ ‘puzhiyuan185489643@gmail.com’
-LastEditTime: 2023-11-15 22:15:42
+LastEditTime: 2023-11-19 16:48:42
 FilePath: \AutonomousDriving\PyTorch\src\AlexNet.py
 Description: 实现 AlexNet
 '''
@@ -63,12 +63,16 @@ if __name__ == "__main__":
     epochs = 20
     batch_size = 256
     lr = 1e-3
-    model = AlexNet()
-    loss = nn.CrossEntropyLoss()
-    optimizer = torch.optim.SGD(model.parameters(), lr=lr)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"device:{device}")
+
+    
+    model = AlexNet().to(device=device)
+    loss = nn.CrossEntropyLoss()
+    optimizer = torch.optim.SGD(model.parameters(), lr=lr)
+
+
 
     for i in tqdm.tqdm(range(epochs)):
         train_loss = model_train(model, train_dataloader, loss, optimizer, device)
